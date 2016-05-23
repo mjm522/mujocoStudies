@@ -1,1 +1,2 @@
 # generateEoM
+# mujocoStudies
