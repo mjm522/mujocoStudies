@@ -1,0 +1,31 @@
+<mujoco model="doublePendulum">
+    <compiler inertiafromgeom="true" coordinate="global"/>
+    <default>
+        <geom rgba=".8 .6 .4 1"/>
+    </default>
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2=".6 .8 1" width="256" height="256"/>
+    </asset>
+    <worldbody>
+        <light pos="0 1 1" dir="0 -1 -1" diffuse="1 1 1"/>
+        <body>
+            <geom type="capsule" fromto="0 0 1 0 0 0.6" size="0.04"/>
+            <!--<joint type="ball" pos="0 0 1"/>-->
+            <joint name="joint1" type="hinge" pos="0 0 1" axis="0 1 0"/>
+            <body>
+                <geom type="capsule" fromto="0 0 0.6 0.3 0 0.6" size="0.04"/>
+                <joint name="joint2" type="hinge" pos="0 0 0.6" axis="0 1 0"/>
+            </body>
+        </body>
+    </worldbody>
+    <actuator>
+<!--  ================= Torque actuators ================= -->
+
+    <motor name="Joint2" gear="200" joint="joint2" ctrlrange="-0.005 0.005"/>
+    
+ 
+ <!--  ================= Position actuators ================= -->
+ <!--
+   <position joint="joint2" name="Joint2" kp="100" ctrlrange="-12.57 12.57"/> -->
+</actuator>
+</mujoco>

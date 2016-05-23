@@ -1,0 +1,70 @@
+<mujoco model="cartopole">
+
+<compiler coordinate="global" inertiafromgeom="true" angle="degree"/>
+
+<default>
+    <joint limited="true" damping="1" stiffness="0" armature=".1" user="0"/>
+    <geom solref="0.008 1" solimp="0.95 0.95 0.01" margin="0.001" user="0"/>
+    <motor ctrllimited="true" ctrlrange="-1 1"/>
+    <position ctrllimited="true"/>
+    
+    <default class="cart">
+        <geom friction="1 0.005 0.001" rgba=".75 .6 .5 1" contype="1" conaffinity="0"/>
+    </default>
+    <default class="pendulum">
+        <joint damping="5"/>
+    </default>
+</default>
+
+<option timestep="0.002" iterations="50" solver="PGS">
+    <flag energy="enable"/>
+</option>
+
+<worldbody>
+    <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>	
+    <geom type="plane" size="1 1 0.1" rgba=".5 .5 .5 1"/>
+    
+    <!--  ================= pendulum ================= /-->
+    <body name="pendulum">
+        <joint class="pendulum" name="joint" type="hinge" pos="0 0 0.115" axis="0 1 0" range="-180 180" damping="5" stiffness="20" armature="0.02"/>
+        <geom class="pendulum" name="link" type="capsule" fromto="0 0 0.115 0 0 0.6" size=".01 0.01 0.2" rgba=".1 .9 .1 1"/>
+    </body>
+      
+    <!--  ================= Cart ================= /-->
+<body name="cart">
+    <!--<joint name="fr" type="free" limited="false"/>-->
+    <geom class="cart" name="cartbody" type="box" pos="0 0 0.025" size="0.12 0.08 0.04" rgba="0.5 0.6 0.8 1"/>
+    <geom class="cart" name="cartbodyp1" type="box" pos="0.09 0.0 0.065" size="0.01 0.05 0.05" rgba="0.5 0.6 0.8 1"/>
+    <geom class="cart" name="cartbodyp2" type="box" pos="-0.09 0.0 0.065" size="0.01 0.05 0.05" rgba="0.5 0.6 0.8 1"/>
+    <joint class="cart" name="wheel1" type="hinge" pos="0.09 0.08 0" axis="0 1 0" limited="false" damping="5" stiffness="20" armature="0.02"/>
+    <geom type="cylinder" name="Wheel1"  fromto="0.09 0.08 0 0.09 0.09 0" size="0.04" rgba="0.5 0.8 0.8 1"/>
+    <joint class="cart" name="wheel2" type="hinge" pos="0.09 -0.08 0" axis="0 1 0" limited="false" damping="5" stiffness="20" armature="0.02"/>
+    <geom type="cylinder" name="Wheel2"  fromto="0.09 -0.08 0 0.09 -0.09 0" size="0.04" rgba="0.5 0.8 0.8 1"/>
+    <joint class="cart" name="wheel3" type="hinge" pos="-0.09 0.08 0.1" axis="0 -1 0" limited="false" damping="5" stiffness="20" armature="0.02"/>
+    <geom type="cylinder" name="Wheel3"  fromto="-0.09 0.08 0 -0.09 0.09 0" size="0.04" rgba="0.5 0.8 0.8 1"/>
+    <joint class="cart" name="wheel4" type="hinge" pos="-0.09 -0.08 0.1" axis="0 -1 0" limited="false" damping="5" stiffness="20" armature="0.02"/>
+    <geom type="cylinder" name="Wheel4"  fromto="-0.09 -0.08 0 -0.09 -0.09 0" size="0.04" rgba="0.5 0.8 0.8 1"/>
+
+  <!--
+    <site name="endO1" pos="0 -0.08 0.1" type="sphere" size="0.01"/>
+    <site name="endO2" pos="0 0.08 0.1" type="sphere" size="0.01"/>
+    <site name="endO3" pos="0.08 0 0.1" type="sphere" size="0.01"/>
+    <site name="endO4" pos="-0.08 0 0.1" type="sphere" size="0.01"/> 
+    -->
+</body>
+</worldbody>
+<actuator>
+<!--  ================= Torque actuators ================= -->
+<!-->
+    <motor name="1joint1" gear="200" joint="1joint1"/>
+    -->
+ 
+ <!--  ================= Position actuators ================= -->
+ 
+   <position joint="joint" name="Joint" kp="100" ctrlrange="-12.57 12.57"/>
+   <position joint="wheel1" name="whEel1" kp="100" ctrlrange="-12.57 12.57"/>
+   <position joint="wheel2" name="whEel2" kp="100" ctrlrange="-12.57 12.57"/>
+   <position joint="wheel3" name="whEel3" kp="100" ctrlrange="-12.57 12.57"/>
+   <position joint="wheel4" name="whEel4" kp="100" ctrlrange="-12.57 12.57"/>
+</actuator>
+</mujoco>
